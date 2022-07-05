@@ -7,6 +7,6 @@ Program ProyectoPrototipoA;
 
 Begin
  writeln('ACA Prototipo');// este es un propotipo del proyecto
-
+ //Crear una presentacion con graph?
  Readln;
 End.
