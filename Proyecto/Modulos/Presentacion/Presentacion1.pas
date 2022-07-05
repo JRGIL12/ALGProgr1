@@ -26,7 +26,11 @@ Begin
  //Linea 5
  write(' ');textbackground(red);write(' ');textbackground(0);write('  ');textbackground(red);write(' ');textbackground(0);
  write('  ');textbackground(red);write('   ');textbackground(0);write(' ');
- textbackground(red);write(' ');textbackground(0);write('  ');textbackground(red);writeln(' ');textbackground(0);
+ textbackground(red);write(' ');textbackground(0);write('  ');textbackground(red);write(' ');textbackground(0);write(' ');
+ //Continuacion de la linea 5
+ textbackground(white);textcolor(red);writeln(' Automata Celular alive');
+
+ NormVideo;
 
  Readln;
 End.
