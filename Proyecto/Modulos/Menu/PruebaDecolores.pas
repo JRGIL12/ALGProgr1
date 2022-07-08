@@ -16,6 +16,9 @@ Begin
     textbackground(i);writeln(i,' fondo      ');
     textcolor(j);writeln(i,j,' fondo+texto         ');
     textcolor(j+blink);writeln(i,j,' fondo+texto+blink   ');
+    normvideo;
+    Writeln(' ');
+    delay(100);
    end;
  Readln;
 End.
