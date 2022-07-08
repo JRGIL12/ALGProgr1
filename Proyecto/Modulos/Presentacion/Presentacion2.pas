@@ -43,5 +43,8 @@ Begin
  textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
  // creditos
  write(' ');textbackground(Lightcyan);textcolor(black);writeln(' Emily-Jesus ');NormVideo;
+ writeln();
+ write(Chr(175));
  Readln;
+ clrscr;
 End.
