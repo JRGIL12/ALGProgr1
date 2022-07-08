@@ -10,8 +10,8 @@ Begin
  writeln('          ');
  writeln('          ');
  writeln('          ');
- for i:=1 to 9 do
-  for j:=1 to 9 do
+ for i:=0 to 9 do
+  for j:=0 to 9 do
    begin
     textbackground(i);writeln(i,' fondo      ');
     textcolor(j);writeln(i,j,' fondo+texto         ');
