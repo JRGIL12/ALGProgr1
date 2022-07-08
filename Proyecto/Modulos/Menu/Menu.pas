@@ -18,6 +18,6 @@ Begin
  Textbackground(7);textcolor(3);Writeln(' Sentings ');normvideo;Writeln();
  Write('                               ');write(3);
  Textbackground(7);textcolor(3);Writeln('   Exit   ');normvideo;Writeln();
- writeln();Write('                               ');
+ writeln();Write('                              ');Write(chr(175));
  Readln;
 End.
