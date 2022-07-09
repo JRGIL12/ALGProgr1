@@ -18,6 +18,7 @@ function Vecinas(Caldo:matriz;Px,Py:integer):integer;
       for AuxY:=-1 to 1 do
           if ( (AuxX<>0) or (AuxY<>0) ) then
              begin
+				  // crear una funcion rango
                   Rango:= (Px+AuxX) > 0 ;
                   Rango:= ( Rango and ((Px+AuxX) < F+1) ) ;
                   Rango:= ( Rango and ((Py+AuxY) > 0) ) ;
