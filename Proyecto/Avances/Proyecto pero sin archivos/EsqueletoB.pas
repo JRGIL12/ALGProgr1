@@ -1,5 +1,9 @@
 program EsqueletoB;
-{soldado esqueleto?}
+{
+ soldado esqueleto?
+ el programa requiere filas, columnas y poblacion, dado estas geneera un caldo de cultivo 'caldo inicial'
+ tambien tiene un procedimiento de transicion con el cual se puede avanzar generaciones del caldo de cultivo
+}
 uses
  crt;
 type
@@ -7,6 +11,30 @@ type
 var
 	Caldo,CeldasVecinas:matriz;
 	poblacion,F{Fila},C{Columna},x{Aux fila},y{aux Columna},z{Aux Poblacion},Salir: integer;
+
+procedure InicializarDatos;
+begin
+ //inicializamos z en 0
+ z:=0;
+ //Inicializamos la matriz con todos sus celdas en 0
+	for x := 1 to F do
+		for y := 1 to C do
+			Caldo[x,y]:=0;
+end;
+
+procedure llenarMatrizxPoblacion;
+begin
+ while z<> poblacion do
+	Begin
+		x:=1+random(F);
+		y:=1+random(C);
+		If Caldo[x,y]<>1 then
+			begin
+				Caldo[x,y]:=1;
+				z:=z+1;
+			end;
+	End;
+end;
 
 function Vecinas(Caldo:matriz;Px,Py:integer):integer;
  var
@@ -86,23 +114,9 @@ Begin   // Programa principal
  write('Ingrese el numero de comlumnas');readln(C);writeln('');
  write('Ingrese la poblacion de celulas en la matriz'); Read(poblacion);writeln('');
  Randomize;
- z:=0;
- //Inicializamos la matriz de forma aleatoria
-	for x := 1 to F do
-		for y := 1 to C do
-			Caldo[x,y]:=0;
- //lenamos la matriz dada la poblacion
- while z<> poblacion do
-	Begin
-		x:=1+random(F);
-		y:=1+random(C);
-		If Caldo[x,y]<>1 then
-			begin
-				Caldo[x,y]:=1;
-				z:=z+1;
-			end;
-	End;
- writeln('Este es su caldo de cultivo ');
+ InicializarDatos;
+ llenarMatrizxPoblacion;
+ writeln('Este es su caldo de cultivo Inicial');
  imprimircaldo;
  transicion;
  Readln(salir);
