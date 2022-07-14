@@ -1,0 +1,24 @@
+coma:=0;
+ fila:='';
+ columna:='';
+ for i:=1 to b do
+     begin
+         for j:=0 to length(valor[i]) do
+          if valor[i][j]= ',' then
+             coma:=coma+1;
+          if coma=0 then
+             fila:= fila+valor[i][j]
+          else
+              columna:= columna+valor[i][j];
+         filcol[1,i]:=fila;
+         filcol[2,i]:=columna;
+     end;
+   for j := 1 to 2 do
+    begin
+      for i := 1 to b do
+        begin
+          write('|');
+          write(Filcol[j,i]);
+        end;
+      writeln('|');
+    end;
