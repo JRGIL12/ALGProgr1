@@ -14,6 +14,11 @@ begin
     write(' ');
 end;
 
+procedure Centrar (objeto:string;Centrado:integer);
+begin
+  EspacioX(Centrado);write(objeto);spacioX(Centrado);
+end;
+
 procedure barra;
 begin
   textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
@@ -66,13 +71,13 @@ Begin
  Readln;
 End;
 
-Procedure Menu(titulo,op1,op2,op3:string);
+Procedure Menu(titulo,op1,op2,op3:string;Ct:integer);
 Begin
  clrscr;writeln();writeln();writeln();writeln();writeln();{5 saltos de linea para intentar centrarlo }
  EspacioX(25);
  Textbackground(7);textcolor(3+blink);Writeln(' Automata Celular Alive ');normvideo;
  EspacioX(25);
- Write('         ');Textbackground(7);textcolor(0);Writeln(titulo);normvideo;
+ Write('         ');Textbackground(7);textcolor(0);Centrar(titulo,Ct);normvideo;
  Writeln();
  Writeln();
  EspacioX(30+1);write(1);
@@ -111,13 +116,13 @@ end;
 begin //programa principal
  presentacion;
  repeat
-    menu(' MENU ','   Play   ',' Sentings ','   Exit   ');
+    menu('MENU','   Play   ',' Sentings ','   Exit   ',1);
     validar(OpM,true,false,' el dato',3,0);barra;
     case OpM of
     1:
       Begin
            repeat
-                 menu(' play ','     Mostrar Caldo    ','  Editar Caldo  ','        Salir        ');
+                 menu('play','     Mostrar Caldo    ','  Editar Caldo  ','        Salir        ',1);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  case OpSM of
                  1:
@@ -127,12 +132,12 @@ begin //programa principal
                  2:
                    Begin
                     repeat  
-                        menu(' Editar Caldo ','   Avanzar Generacion   ',' Modificar Caldo ','          Salir        ');
+                        menu('Editar Caldo','   Avanzar Generacion   ',' Modificar Caldo ','          Salir        ',1);
                         validar(OpISM,true,false,' el dato',3,0);barra;
                         Case OpISM of
                          1:
                           repeat
-                            menu(' Avanzar Generacion ','   mostrar generacion por generacion   ',' Mostrar Generacion N ','          Salir        ');
+                            menu('Avanzar Generacion','   mostrar generacion por generacion   ',' Mostrar Generacion N ','          Salir        ',1);
                             validar(opISM1,true,false,' el dato',3,0);barra;
                             Case opISM1 of
                              1:
@@ -158,7 +163,7 @@ begin //programa principal
     2:
       Begin
            repeat
-                  menu(' Sentings ','   Ver Congifuracion   ',' Cambiar Configuracion ','          Salir        ');
+                  menu('Sentings','   Ver Congifuracion   ',' Cambiar Configuracion ','          Salir        ',1);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  case OpSM of
                  1:
@@ -171,7 +176,7 @@ begin //programa principal
                         readln();
                    end;
                  3:
-                   saliendo(' de la opcion Senting+s',500);
+                   saliendo(' de la opcion Sentings',500);
                  end;
            until OpSM=3;
       end;
