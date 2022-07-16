@@ -1,8 +1,8 @@
-program Hello;
+program Menu;
 uses
     crt;
 type
-   Matriz= array [1..10,1..10] of integer;
+   Matriz= array [1..50,1..50] of integer;
 var
    OpM{ opciones del Menu},OpSM{ opciones del SubMenu} : integer;
 
