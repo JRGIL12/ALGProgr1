@@ -122,7 +122,7 @@ begin //programa principal
     1:
       Begin
            repeat
-                 menu(1,0,'play','Mostrar Caldo',' Editar Caldo','Salir',1,1,1,5);
+                 menu(1,2,'play','Mostrar Caldo',' Editar Caldo','Salir',1,1,1,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  case OpSM of
                  1:
@@ -137,7 +137,7 @@ begin //programa principal
                         Case OpISM of
                          1:
                           repeat
-                            menu(7,3,'Avanzar Generacion','mostrar generacion por generacion','Mostrar Generacion N','Salir',1,3,1,9);
+                            menu(8,12,'Avanzar Generacion','Mostrar Generacion por Generacion',' Mostrar Generacion N','Salir',1,1,7,15);
                             validar(opISM1,true,false,' el dato',3,0);barra;
                             Case opISM1 of
                              1:
@@ -163,7 +163,7 @@ begin //programa principal
     2:
       Begin
            repeat
-                  menu(2,3,'Sentings','Ver Congifuracion','Cambiar Configuracion','Salir',1,3,1,9);
+                  menu(2,5,'Sentings','Ver Congifuracion','Cambiar Configuracion','Salir',1,3,1,9);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  case OpSM of
                  1:
