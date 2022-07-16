@@ -5,8 +5,11 @@ type
    Matriz= array [1..50,1..50] of integer;
 var
    OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu},opISM1{Opciones Internas del sub menu 1}: integer;
-   //se crean varias variables para los distintos sub menus
 
+
+///////////////////////////
+//Procedimientos graficos//
+///////////////////////////
 Procedure EspacioX(N:integer);
 var i:integer;
 begin
@@ -112,6 +115,31 @@ begin
      writeln(' Esta saliendo ',name);
      delay(tiempo);NormVideo;
 end;
+//////////////////////////////////////
+//fin de los procedimientos graficos//
+//////////////////////////////////////
+
+procedure imprimir_Matriz(MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
+var
+ x,y:integer;
+begin
+  writeln('');
+  for x := 1 to Filas do
+    begin
+      for y := 1 to columnas do
+        begin
+          write('|');
+          if ImprimirCaldo then
+             begin
+                  textbackground(MatrizAimprimir[x,y]);
+                  write(' ');
+             end
+          else
+              write(MatrizAimprimir[x,y]);
+        end;
+      writeln('|');
+    end;
+end;
 
 begin //programa principal
  presentacion;
@@ -122,14 +150,14 @@ begin //programa principal
     1:
       Begin
            repeat
-                 menu(1,2,'play','info del Caldo',' Editar Caldo','Salir',1,1,1,5);
+                 menu(1,2,'play','Info del Caldo','Editar Caldo',' Salir',1,1,2,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  case OpSM of
                  1:
                   begin
                     writeln(' ese es su caldo de cultivo');
 
-                    readln();
+                    entrada;readln();
                   end;
                  2:
                    Begin
