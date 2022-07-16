@@ -4,7 +4,8 @@ uses
 type
    Matriz= array [1..50,1..50] of integer;
 var
-   OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu},opISM1: integer;
+   OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu},opISM1{Opciones Internas del sub menu 1}: integer;
+   //se crean varias variables para los distintos sub menus
 
 Procedure EspacioX(N:integer);
 var i:integer;
@@ -16,6 +17,11 @@ end;
 procedure barra;
 begin
   textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
+end;
+
+procedure entrada;
+begin
+  textcolor(cyan);write(Chr(175));NormVideo;
 end;
 
 Procedure Presentacion;
@@ -56,8 +62,7 @@ Begin
  writeln();barra;
  // creditos
  write(' ');textbackground(Lightcyan);textcolor(black);writeln(' Emily-Jesus ');NormVideo;
- writeln();
- write(Chr(175));
+ writeln();entrada;
  Readln;
 End;
 
@@ -76,7 +81,7 @@ Begin
  Textbackground(7);textcolor(3);Writeln(op2);normvideo;Writeln();
  EspacioX(30+1);write(3);
  Textbackground(7);textcolor(3);Writeln(op3);normvideo;Writeln();
- writeln();EspacioX(30);Write(chr(175));
+ writeln();EspacioX(30);entrada;
 End;
 
 Procedure validar(var Dato:integer;leer,escribir:boolean;name:string;LimSup,Liminf:integer);
@@ -166,7 +171,7 @@ begin //programa principal
                         readln();
                    end;
                  3:
-                   saliendo(' de la opcion Sentinggs',500);
+                   saliendo(' de la opcion Senting+s',500);
                  end;
            until OpSM=3;
       end;
