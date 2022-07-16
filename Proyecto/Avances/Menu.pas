@@ -6,9 +6,16 @@ type
 var
    OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu},opISM1: integer;
 
+Procedure EspacioX(N:integer);
+var i:integer;
+begin
+  for i := 1 to N do  
+    write(' ');
+end;
+
 procedure barra;
 begin
-textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
+  textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
 end;
 
 Procedure Presentacion;
@@ -38,8 +45,7 @@ Begin
  //Continuacion de la linea 5
  textbackground(white);textcolor(cyan+blink);writeln(' Automata Celular alive');NormVideo;
  //linea de descipcion
- writeln();
- barra;
+ writeln();barra;
  write('La evolucion de la vida tiene una variedad de patrones reconocidos que provienen');
  Write('de determinadas posiciones iniciales. La vida es un ejemplo de emergencia y auto-organizacion.');
  Write(' Los automatas celulares son automatas simples que producen una   salida a partir de varias ');
@@ -47,8 +53,7 @@ Begin
  Write('Por lo general, en un automata celular, al igual que  en la evolucion, el estado de ');
  Write('una celula en una generacion determinada depende  unica y exclusivamente de los estados ');
  writeln('de las celulas vecinas y de su propio     estado en la generacion anterior.');
- writeln();
- barra;
+ writeln();barra;
  // creditos
  write(' ');textbackground(Lightcyan);textcolor(black);writeln(' Emily-Jesus ');NormVideo;
  writeln();
@@ -59,19 +64,19 @@ End;
 Procedure Menu(titulo,op1,op2,op3:string);
 Begin
  clrscr;writeln();writeln();writeln();writeln();writeln();{5 saltos de linea para intentar centrarlo }
- Write('                         ');{ centrar}
+ EspacioX(25);
  Textbackground(7);textcolor(3+blink);Writeln(' Automata Celular Alive ');normvideo;
- Write('                         ');
+ EspacioX(25);
  Write('         ');Textbackground(7);textcolor(0);Writeln(titulo);normvideo;
  Writeln();
  Writeln();
- Write('                               ');write(1);
+ EspacioX(30+1);write(1);
  Textbackground(7);textcolor(3);Writeln(op1);normvideo;Writeln();
- Write('                               ');write(2);
+ EspacioX(30+1);write(2);
  Textbackground(7);textcolor(3);Writeln(op2);normvideo;Writeln();
- Write('                               ');write(3);
+ EspacioX(30+1);write(3);
  Textbackground(7);textcolor(3);Writeln(op3);normvideo;Writeln();
- writeln();Write('                              ');Write(chr(175));
+ writeln();EspacioX(30);Write(chr(175));
 End;
 
 Procedure validar(var Dato:integer;leer,escribir:boolean;name:string;LimSup,Liminf:integer);
