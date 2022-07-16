@@ -128,6 +128,8 @@ begin //programa principal
                  1:
                   begin
                     writeln(' ese es su caldo de cultivo');
+
+                    readln();
                   end;
                  2:
                    Begin
@@ -141,9 +143,17 @@ begin //programa principal
                             validar(opISM1,true,false,' el dato',3,0);barra;
                             Case opISM1 of
                              1:
-                                writeln(' se avanzara mostrando cada generacion');
+                               begin
+                                    writeln(' se avanzara mostrando cada generacion');
+
+                                    readln();
+                               end;
                              2:
-                                writeln(' se avanzara hasat la generacion deseada');
+                               begin
+                                    writeln(' se avanzara hasat la generacion deseada');
+
+                                    readln();
+                               end;
                              3:
                                 saliendo(' de Avanzar Generacion',500);
                              end;
@@ -169,10 +179,13 @@ begin //programa principal
                  1:
                    Begin
                         writeln(' La configuracion actual es:');
+
+                        readln();
                    end;
                  2:
                    Begin
                         writeln(' aun no puede alterar la configuracion');
+
                         readln();
                    end;
                  3:
