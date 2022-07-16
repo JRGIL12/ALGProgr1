@@ -122,7 +122,7 @@ begin //programa principal
     1:
       Begin
            repeat
-                 menu(1,'play','Mostrar Caldo','Editar Caldo','Salir',1,5,2,9);
+                 menu(1,'play','Mostrar Caldo',' Editar Caldo','Salir',1,1,1,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  case OpSM of
                  1:
@@ -132,7 +132,7 @@ begin //programa principal
                  2:
                    Begin
                     repeat  
-                        menu(4,'Editar Caldo','Avanzar Generacion','Modificar Caldo','Salir',1,1,3,9);
+                        menu(4,'Editar Caldo','Avanzar Generacion',' Modificar Caldo',' Salir',1,1,2,7);
                         validar(OpISM,true,false,' el dato',3,0);barra;
                         Case OpISM of
                          1:
