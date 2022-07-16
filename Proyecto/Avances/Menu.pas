@@ -1,10 +1,10 @@
-program Menu;
+program MenuGrafico;
 uses
     crt;
 type
    Matriz= array [1..50,1..50] of integer;
 var
-   OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu}: integer;
+   OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu},opISM1: integer;
 
 procedure barra;
 begin
@@ -121,21 +121,23 @@ begin //programa principal
                         validar(OpISM,true,false,' el dato',3,0);barra;
                         Case OpISM of
                          1:
-                          repeat  
+                          repeat
                             menu(' Avanzar Generacion ','   mostrar generacion por generacion   ',' Mostrar Generacion N ','          Salir        ');
-                            validar(OpISM,true,false,' el dato',3,0);barra;
-                            Case OpISM of
+                            validar(opISM1,true,false,' el dato',3,0);barra;
+                            Case opISM1 of
                              1:
                                 writeln(' se avanzara mostrando cada generacion');
                              2:
                                 writeln(' se avanzara hasat la generacion deseada');
                              3:
                                 saliendo(' de Avanzar Generacion',500);
-                          Until OpISM=3;
+                             end;
+                          Until opISM1=3;
                         2:
-
+                         Writeln('');
                         3:
                           saliendo(' de editar Caldo',500);
+                        end;
                     Until OpISM=3;
                    end;
                  3:
