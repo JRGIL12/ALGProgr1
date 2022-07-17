@@ -11,7 +11,7 @@ var
    // variables principales
    CeldasVecinas,CaldoDeCultivo:matriz;
    Entrada,Salida:text;
-   //Variables auxiliares
+   //Variables secundarias
    x_Filas,y_columnas:integer;
    ruta,NombreDelArchivo:string;
    //Contadores
@@ -126,8 +126,9 @@ var
  valido:boolean;
 begin
      repeat
+            Writeln('');
             if escribir then
-                Writeln('Ingrese',name,' ( max ',LimSup,' - min ',LimInf,' )');
+                Write('Ingrese ',name,' ( max ',LimSup,' - min ',LimInf,' ) ');
             if leer then
                 readln(Dato);
             if  Dato>LimSup then
@@ -135,6 +136,7 @@ begin
             if  Dato<LimInF+1 then
                 Writeln(name,'es inferior a el limite ',LimInf);
             valido:=( (Dato<LimSup+1)and(Dato>LimInf) );
+            Writeln('');
      until valido;
 end;
 
@@ -151,7 +153,6 @@ begin
       end;
 end;
 
-
 Procedure inicializarDatosDeFormaPredeterminada;
 //Nota: como solo se inicializan los datos, estos se pueden llamar de forma global sin pasarlos como parametros
 begin
@@ -164,6 +165,21 @@ begin
   Generacion:=0;
   NombreDelArchivo:='entrada';
   Ruta:='C:\Datos\'+NombreDelArchivo+'.txt';
+end;
+
+Procedure Cambiar_En_posicion_XY(Celula:integer;estado,Proceso:string);
+var
+ x,y:integer;
+Begin
+     validar(x,true,true,'fila ',X_filas,1);
+     validar(y,true,true,'Columna',Y_columnas,1);
+     if CaldoDeCultivo[x,y]= celula then
+        Writeln(' En la posicion (',x,',',y,') ya existe una celula',estado)
+     else
+         begin
+              Writeln(' En la posicion (',x,',',y,') no existe una celula',estado,' se procede a ',Proceso);
+              CaldoDeCultivo[x,y]:=celula;
+         end;
 end;
 
 procedure imprimir_Matriz(NombreDeLaMatriz:string;MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
@@ -284,13 +300,14 @@ begin
                              1:
                                begin
                                     writeln('Eliminar Celula en la posicion');
-
+                                    Cambiar_En_Posicion_XY(1,'muerta','Eliminar');
                                     readln();
                                end;
                              2:
                                begin
                                     writeln('Agregar Celula en la posicion');
-
+                                    validar(x,true,true,'fila ',X_filas,1);
+                                    validar(y,true,true,'Columna',Y_columnas,1);
                                     readln();
                                end;
                              3:
