@@ -1,4 +1,4 @@
-program MenuGrafico;
+program AUtomataCelular_Alive;
 uses
     crt;
 type
@@ -7,13 +7,13 @@ var
    //Variables para el menu y opciones graficas  (op?opciones) (M?Menu) (SM?SubMenu )
    OpM,OpSM,OpISM,OpISM1{Opciones Internas del SubMenu 1}: integer;
    //Variables de comprobacion:
-   Archivos,Local,RutaModificada,Personalizacion:boolean;
+   Archivos,Retornarsalida,Local,RutaModificada,Personalizacion:boolean;
    // variables principales
    CelulasVecinas,CaldoDeCultivo:matriz;
    Entrada,Salida:text;
    //Variables secundarias
    x_Filas,y_columnas:integer;
-   ruta,Carpeta,NombreDelArchivo:string;
+   Rutae,RutaS,Carpeta,NombreDelArchivoE,NombreDelArchivoS:string;
    //Contadores
    Generacion,Poblacion,MinPoblacion,N:integer;
 
@@ -156,6 +156,23 @@ begin
       end;
 end;
 
+function FileExists(ruta: String): boolean;
+var
+    f: text;
+begin
+    assign(f,ruta);
+    {$I-}
+    reset(f);
+    {$I+}
+    if (IOResult = 0) then
+    begin
+        close(f);
+        FileExists:=true;
+    end
+    else
+        FileExists:=false;
+end;
+
 Procedure inicializarDatosDeFormaPredeterminada;
 //Nota: como solo se inicializan los datos, estos se pueden llamar de forma global sin pasarlos como parametros
 begin
@@ -169,9 +186,11 @@ begin
   y_Columnas:= 10 + random(41);  (* Se recomienda meter un dato menor a 40*)
   poblacion:=0;
   Generacion:=0;
-  NombreDelArchivo:='entrada';
+  NombreDelArchivoE:='entrada';
+  NombreDelArchivoS:='Salida';
   Carpeta:='C:\Datos\';
-  Ruta:=Carpeta+NombreDelArchivo+'.txt';
+  RutaE:=Carpeta+NombreDelArchivoE+'.txt';
+  RutaS:=Carpeta+NombreDelArchivoS+'.txt';
   RutaModificada:=false;
 end;
 
@@ -341,6 +360,21 @@ Begin
      end;
 end;
 
+procedure Retornar(var Archivo:text);
+
+var
+  n,m:integer;
+begin
+ rewrite(Archivo);
+   for n:=1 to x_Filas do
+       for M:=1 to Y_columnas do
+           if CaldoDecultivo[n,m]=1 then
+              begin
+                  write(Archivo,N);write(archivo,',');writeln(archivo,M);
+              end;
+ close(Archivo);
+end;
+
   ////////////////////////////////////////////////////
  // 3. Procedimientos de ajustes y modificaciones  //
 ////////////////////////////////////////////////////
@@ -371,16 +405,22 @@ begin
  repeat
     menu(1,-1,'MENU','Play','Sentings','Exit',1,3,1,3);
     validar(OpM,true,false,' el dato',3,0);barra;
+    retornarSalida:=FileExists(rutaS);
     case OpM of
     1:
       Begin
            repeat
                  menu(1,2,'play','Info del Caldo','Editar Caldo',' Salir',1,1,2,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
+                 if not FileExists(rutaE) then
+                    begin
+                         Writeln('La ruta no es valida, por favor cambiela');
+                         Archivos:=false;
+                    end;
                  if archivos then
                     begin
-                         assign(Entrada,ruta);
-                         RevisarArchivo(Entrada,NombreDelArchivo,false);
+                         assign(entrada,rutaE);
+                         RevisarArchivo(Entrada,NombreDelArchivoE,false);
                     end;
                  Llenar_Celdas_de(CelulasVecinas);
                  case OpSM of
@@ -389,7 +429,7 @@ begin
                     EspacioX(10);writeln('Informacion Sobre El caldo de cultivo:');
                     Writeln('');
                     if Archivos then
-                       RevisarArchivo(Entrada,NombreDelArchivo,true);
+                       RevisarArchivo(Entrada,NombreDelArchivoE,true);
                     EspacioX(5);Writeln('Dimenciones: ',x_filas,'x',y_Columnas);
                     EspacioX(5);Writeln('Poblacion: ',Poblacion);
                     EspacioX(5);Writeln('Generacion: ',Generacion);
@@ -457,16 +497,19 @@ begin
                  menu(2,5,'Sentings','Ver Congifuracion','Cambiar Configuracion','Salir',1,3,1,9);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  if Not(RutaModificada) then
-                    Ruta:=Carpeta+NombreDelArchivo+'.txt';
+                    RutaE:=Carpeta+NombreDelArchivoE+'.txt';
                  case OpSM of
                  1:
                    Begin
                         writeln('  La configuracion actual es:');
                         Writeln('');
                         Write(' *Archivos: ');writeln(Archivos);
-                        Write(' -Nombre del archivo: ');writeln(NombreDelArchivo);
+                        Write(' -retornar salida:');Writeln(Retornarsalida);
+                        Write(' -Nombre del archivo de Entrada: ');writeln(NombreDelArchivoE);
+                        Write(' -Nombre del archivo de Salida: ');writeln(NombreDelArchivoS);
                         Write(' -Carpeta: ');Writeln(Carpeta);
-                        Write(' -Ruta: ');writeln(Ruta);
+                        Write(' -Ruta de Entrada: ');writeln(RutaE);
+                        Write(' -Ruta de Salida: ');writeln(RutaS);
                         Writeln('');
                         Write(' *Local: ');writeln(Local);
                         Writeln('');
@@ -486,6 +529,12 @@ begin
       end;
     3:
       saliendo('del programa principal',1000);
+
     end;
+    if RetornarSalida then
+       begin
+              assign(salida,rutaS);
+              Retornar(Salida);
+       end;
  until OpM=3;
 end.
