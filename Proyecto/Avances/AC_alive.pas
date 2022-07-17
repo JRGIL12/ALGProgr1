@@ -7,13 +7,13 @@ var
    //Variables para el menu y opciones graficas  (op?opciones) (M?Menu) (SM?SubMenu )
    OpM,OpSM,OpISM,OpISM1{Opciones Internas del SubMenu 1}: integer;
    //Variables de comprobacion:
-   Archivos:boolean;
+   Archivos,RutaModificada:boolean;
    // variables principales
    CelulasVecinas,CaldoDeCultivo:matriz;
    Entrada,Salida:text;
    //Variables secundarias
    x_Filas,y_columnas:integer;
-   ruta,NombreDelArchivo:string;
+   ruta,Carpeta,NombreDelArchivo:string;
    //Contadores
    Generacion,Poblacion,N:integer;
 
@@ -167,7 +167,9 @@ begin
   poblacion:=0;
   Generacion:=0;
   NombreDelArchivo:='entrada';
-  Ruta:='C:\Datos\'+NombreDelArchivo+'.txt';
+  Carpeta:='C:\Datos\';
+  Ruta:=Carpeta+NombreDelArchivo+'.txt';
+  RutaModificada:=false;
 end;
 
 procedure imprimir_Matriz(NombreDeLaMatriz:string;MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
@@ -393,13 +395,19 @@ begin
     2:
       Begin
            repeat
-                  menu(2,5,'Sentings','Ver Congifuracion','Cambiar Configuracion','Salir',1,3,1,9);
+                 menu(2,5,'Sentings','Ver Congifuracion','Cambiar Configuracion','Salir',1,3,1,9);
                  validar(OpSM,true,false,' el dato',3,0);barra;
+                 if Not(RutaModificada) then
+                    Ruta:=Carpeta+NombreDelArchivo+'.txt';
                  case OpSM of
                  1:
                    Begin
-                        writeln(' La configuracion actual es:');
-
+                        writeln('  La configuracion actual es:');
+                        Writeln('');
+                        Write(' Archivos: ');writeln(Archivos);
+                        Write(' Nombre del archivo: ');writeln(NombreDelArchivo);
+                        Write(' Carpeta: ');Writeln(Carpeta);
+                        Write(' Ruta: ');writeln(Ruta);
                         readln();
                    end;
                  2:
