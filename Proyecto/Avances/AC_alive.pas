@@ -12,8 +12,10 @@ var
    CeldasVecinas,CaldoDeCultivo:matriz;
    Entrada,Salida:text;
    //Variables auxiliares
-   x_Filas,y_columnas,Poblacion:integer;
+   x_Filas,y_columnas:integer;
    ruta,NombreDelArchivo:string;
+   //Contadores
+   Generacion,Poblacion:integer;
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -22,8 +24,9 @@ Procedure EspacioX(N:integer);
 (* 1.1 Procedimiento para crear espacios en blanco *)
 var i:integer;
 begin
-  for i := 1 to N do  
-    write(' ');
+  if N>0 then
+     for i := 1 to N do
+         write(' ');
 end;
 
 procedure Centrar (objeto:string;Centrado:integer);
@@ -156,19 +159,29 @@ begin
   Llenar_Matriz(CeldasVecinas,0,false);
   Archivos:=false;
   x_filas:= 10 + random(41) ;
-  y_Columnas:= 10 + random(41) ;
+  y_Columnas:= 10 + random(41);  (* Se recomienda meter un dato menor a 40*)
   poblacion:=0;
+  Generacion:=0;
   NombreDelArchivo:='entrada';
   Ruta:='C:\Datos\'+NombreDelArchivo+'.txt';
 end;
 
-procedure imprimir_Matriz(MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
+procedure imprimir_Matriz(NombreDeLaMatriz:string;MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
 var
  x,y:integer;
 begin
   writeln('');
+  EspacioX(3);Writeln(NombreDeLaMatriz);
+  writeln('');
+  if Columnas > 39 then
+     begin
+          EspacioX(3);Writeln('Dada la cantidad de columnas,');
+          EspacioX(5);Writeln('la matriz podria no verse unforme,');
+          EspacioX(7);Writeln('para evitar esto ingrese menos de 40 columnas');
+     end;
   for x := 1 to Filas do
     begin
+    EspacioX(40-columnas);
       for y := 1 to columnas do
         begin
           write('|');
@@ -182,6 +195,26 @@ begin
         end;
       writeln('|');
     end;
+end;
+
+procedure ImprimirArchivo(var A:text;nombre:string);
+var
+  palabraA:string;
+begin
+ writeln;
+ writeln('archivo de  ',nombre);
+ reset(A);
+ if eof(A) then
+   writeln('Archivo vacio')
+ else
+   begin
+     while not(eof(A)) do
+       begin
+         readln(A,palabraA);
+         writeln(palabraA);
+       end;
+   end;
+ close(A);
 end;
 
   ///////////////////////////
@@ -200,13 +233,21 @@ begin
            repeat
                  menu(1,2,'play','Info del Caldo','Editar Caldo',' Salir',1,1,2,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
-                 assign(Entrada,ruta);
+                 if archivos then
+                    assign(Entrada,ruta);
                  case OpSM of
                  1:
                   begin
-                    writeln(' ese es su caldo de cultivo');
-
-                    EntradaDeDatos;readln();
+                    EspacioX(10);writeln('Informacion Sobre El caldo de cultivo:');
+                    Writeln('');
+                    if Archivos then
+                       ImprimirArchivo(Entrada,NombreDelArchivo);
+                    EspacioX(5);Writeln('Dimenciones: ',x_filas,'x',y_Columnas);
+                    EspacioX(5);Writeln('Poblacion: ',Poblacion);
+                    EspacioX(5);Writeln('Generacion: ',Generacion);
+                    imprimir_Matriz('Caldo de cultivo: ',CaldoDeCultivo,true,x_filas,y_columnas);
+                    imprimir_Matriz('Celulas vecinas de cada celda: ',CeldasVecinas,false,x_filas,y_columnas);
+                    EspacioX(4);EntradaDeDatos;readln();
                   end;
                  2:
                    Begin
