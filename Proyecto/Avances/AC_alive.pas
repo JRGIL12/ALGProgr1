@@ -161,7 +161,7 @@ Procedure inicializarDatosDeFormaPredeterminada;
 begin
   Llenar_Matriz(CaldoDeCultivo,0,false);
   Llenar_Matriz(CelulasVecinas,0,false);
-  Archivos:=false;
+  Archivos:=True;
   Local:= not (archivos);
   Personalizacion:=false;
   x_filas:= 10 + random(41) ;
@@ -205,22 +205,75 @@ begin
     end;
 end;
 
-procedure ImprimirArchivo(var A:text;nombre:string);
+function ValorEntero(texto: string;min,Max:integer): integer;
+var
+  valor, codigoDeError: integer;
+begin
+  valor := 0;
+  val(texto, valor, codigoDeError);
+  if  ( (valor<min) or (valor>Max) ) then
+     writeln(' El Parametro esta fuera del rango permitido por favor verifiquelo');
+  if codigoDeError <> 0 then
+     writeln('hubo un error en la conversion de este parametro, por favor revise que sea un digito');
+  ValorEntero := valor;
+end;
+
+procedure separar(palabra:string;linea0:boolean);
+var
+   Fila,Columna:string;
+   posicion, i, limite:integer;
+Begin
+   posicion:=pos(',',palabra);
+   limite:=posicion-1;
+   Fila:=' ';
+    for i:=1 to limite do
+        Begin
+            Fila:= Fila+copy(palabra,i,1);
+        end;
+   delete(palabra,1,posicion);
+   Columna:=palabra;
+   if Linea0 then
+      begin
+           X_filas:= ValorEntero(Fila,1,50);
+           y_Columnas:=ValorEntero(Columna,1,50);
+      end
+   else
+       CaldoDeCultivo[ValorEntero(Fila,1,50),ValorEntero(Columna,1,50)]:=1;
+end;
+
+procedure RevisarArchivo(var A:text;nombre:string;imprimir:boolean);
 var
   palabraA:string;
+  ContadorDePoblacion:integer;
 begin
- writeln;
- writeln('archivo de  ',nombre);
+ if imprimir then
+    begin
+         writeln;
+         EspacioX(5);writeln('Archivo de  ',nombre,' :');
+         Writeln('');
+    end;
  reset(A);
+ ContadorDePoblacion:=-1;
  if eof(A) then
-   writeln('Archivo vacio')
+   begin
+        EspacioX(4);
+        writeln('Archivo vacio');
+   end
  else
    begin
      while not(eof(A)) do
        begin
          readln(A,palabraA);
-         writeln(palabraA);
+         if imprimir then
+            begin
+                 EspacioX(6);
+                 writeln(palabraA);
+            end;
+         ContadorDePoblacion:=ContadorDePoblacion+1;
+         separar(palabraA,ContadorDePoblacion=0);
+         Writeln('');
        end;
+     poblacion:=ContadorDePoblacion;
    end;
  close(A);
 end;
@@ -324,7 +377,10 @@ begin
                  menu(1,2,'play','Info del Caldo','Editar Caldo',' Salir',1,1,2,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  if archivos then
-                    assign(Entrada,ruta);
+                    begin
+                         assign(Entrada,ruta);
+                         RevisarArchivo(Entrada,NombreDelArchivo,false);
+                    end;
                  Llenar_Celdas_de(CelulasVecinas);
                  case OpSM of
                  1:
@@ -332,7 +388,7 @@ begin
                     EspacioX(10);writeln('Informacion Sobre El caldo de cultivo:');
                     Writeln('');
                     if Archivos then
-                       ImprimirArchivo(Entrada,NombreDelArchivo);
+                       RevisarArchivo(Entrada,NombreDelArchivo,true);
                     EspacioX(5);Writeln('Dimenciones: ',x_filas,'x',y_Columnas);
                     EspacioX(5);Writeln('Poblacion: ',Poblacion);
                     EspacioX(5);Writeln('Generacion: ',Generacion);
