@@ -9,7 +9,11 @@ var
    //Variables de comprobacion:
    Archivos:boolean;
    // variables principales
-   celdasVecinas,CaldoDeCultivo:matriz;
+   CeldasVecinas,CaldoDeCultivo:matriz;
+   Entrada,Salida:text;
+   //Variables auxiliares
+   x_Filas,y_columnas,Poblacion:integer;
+   ruta,NombreDelArchivo:string;
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -34,8 +38,8 @@ begin
   textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
 end;
 
-procedure entrada;
-(* 1.4 Procedimiento para crear espacios en blanco *)
+procedure EntradaDeDatos;
+(* 1.4 Procedimiento para que emuestre el simbolo para que entre un dato *)
 begin
   textcolor(cyan);write(Chr(175));NormVideo;
 end;
@@ -79,7 +83,7 @@ Begin
  writeln();barra;
  // creditos
  write(' ');textbackground(Lightcyan);textcolor(black);writeln(' Emily-Jesus ');NormVideo;
- writeln();entrada;
+ writeln();EntradaDeDatos;
  Readln;
 End;
 
@@ -99,7 +103,7 @@ Begin
  Textbackground(7);textcolor(3);Centrar(op2,COp2);normvideo;Writeln();
  EspacioX(30-NtabOp);write(3);
  Textbackground(7);textcolor(3);Centrar(op3,COp3);normvideo;Writeln();
- writeln();EspacioX(30);entrada;
+ writeln();EspacioX(30);EntradaDeDatos;
 End;
 
 procedure Saliendo(name:string;tiempo:integer);
@@ -132,9 +136,9 @@ begin
 end;
 
 procedure Llenar_Matriz(MatrizALlenar:matriz;Dato:integer;Aleatorio:boolean);
+(* 2.1 Procedimiento para llenar una matriz *)
 var i,j:integer;
 begin
-  randomize;
   For i:=1 to 50 do
     for j := 1 to 50 do
       begin
@@ -148,7 +152,14 @@ end;
 Procedure inicializarDatosDeFormaPredeterminada;
 //Nota: como solo se inicializan los datos, estos se pueden llamar de forma global sin pasarlos como parametros
 begin
-  //Llenar_Matriz(MatrizALlenar:matriz;Dato:integer;Aleatorio:boolean);
+  Llenar_Matriz(CaldoDeCultivo,0,false);
+  Llenar_Matriz(CeldasVecinas,0,false);
+  Archivos:=false;
+  x_filas:= 10 + random(41) ;
+  y_Columnas:= 10 + random(41) ;
+  poblacion:=0;
+  NombreDelArchivo:='entrada';
+  Ruta:='C:\Datos\'+NombreDelArchivo+'.txt';
 end;
 
 procedure imprimir_Matriz(MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
@@ -177,6 +188,7 @@ end;
  // 0. Programa Principal //
 ///////////////////////////
 begin
+ randomize;
  presentacion;
  InicializarDatosDeFormaPredeterminada;
  repeat
@@ -188,12 +200,13 @@ begin
            repeat
                  menu(1,2,'play','Info del Caldo','Editar Caldo',' Salir',1,1,2,5);
                  validar(OpSM,true,false,' el dato',3,0);barra;
+                 assign(Entrada,ruta);
                  case OpSM of
                  1:
                   begin
                     writeln(' ese es su caldo de cultivo');
 
-                    entrada;readln();
+                    EntradaDeDatos;readln();
                   end;
                  2:
                    Begin
