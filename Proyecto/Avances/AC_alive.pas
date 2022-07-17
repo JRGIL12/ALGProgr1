@@ -147,7 +147,7 @@ begin
       begin
         if Aleatorio then
            dato := Random(2);
-        CaldoDeCultivo[i,j] := dato;
+        MatrizALlenar[i,j] := dato;
       end;
 end;
 
@@ -268,7 +268,7 @@ begin
                                end;
                              2:
                                begin
-                                    writeln(' se avanzara hasat la generacion deseada');
+                                    writeln(' se avanzara hasta la generacion deseada');
 
                                     readln();
                                end;
@@ -277,7 +277,26 @@ begin
                              end;
                           Until opISM1=3;
                         2:
-                         Writeln('');
+                         repeat
+                            menu(6,2,'Modificar Caldo','Eliminar Celula',' Agregar celula','Salir',1,1,1,6);
+                            validar(opISM1,true,false,' el dato',3,0);barra;
+                            Case opISM1 of
+                             1:
+                               begin
+                                    writeln('Eliminar Celula en la posicion');
+
+                                    readln();
+                               end;
+                             2:
+                               begin
+                                    writeln('Agregar Celula en la posicion');
+
+                                    readln();
+                               end;
+                             3:
+                                saliendo(' de Modificar Caldo',500);
+                             end;
+                          Until opISM1=3;
                         3:
                           saliendo(' de editar Caldo',500);
                         end;
