@@ -15,7 +15,7 @@ var
    x_Filas,y_columnas:integer;
    ruta,NombreDelArchivo:string;
    //Contadores
-   Generacion,Poblacion:integer;
+   Generacion,Poblacion,N:integer;
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -280,14 +280,14 @@ begin
                             Case opISM1 of
                              1:
                                begin
-                                    writeln(' se avanzara mostrando cada generacion');
-
+                                    writeln(' Avanza e imprime hasta N');
+                                    validar(N,true,True,' N',500,1);
                                     readln();
                                end;
                              2:
                                begin
-                                    writeln(' se avanzara hasta la generacion deseada');
-
+                                    writeln(' Se Imprime la generacion avanzada en N ');
+                                    validar(N,true,True,' N',500,1);
                                     readln();
                                end;
                              3:
