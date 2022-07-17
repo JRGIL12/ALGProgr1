@@ -16,8 +16,6 @@ var
    ruta,NombreDelArchivo:string;
    //Contadores
    Generacion,Poblacion,N:integer;
-   //auxiliares
-   nAux:integer;
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -133,7 +131,6 @@ var
  valido:boolean;
 begin
      repeat
-            Writeln('');
             if escribir then
                 Write('Ingrese ',name,' ( max ',LimSup,' - min ',LimInf,' ) ');
             if leer then
@@ -143,7 +140,6 @@ begin
             if  (Dato<=LimInF) then
                 Writeln(name,'es inferior a el limite ',LimInf);
             valido:=EsValido(Dato,LimSup,liminf);
-            Writeln('');
      until valido;
 end;
 
@@ -224,9 +220,9 @@ begin
    end;
  close(A);
 end;
-  ////////////////////////////////////////////////
- // 2. procedimientos Modificacion e inspecion //
-////////////////////////////////////////////////
+  //////////////////////////////////////////////
+ // 2. procedimientos inspecion y transicion //
+//////////////////////////////////////////////
 
 function Vecinas_de_una_celda_en(Px,Py:integer):integer;
  var
@@ -255,6 +251,41 @@ Begin
      Numero_de_Vecinas[PosicionX,PosicionY]:=Vecinas_de_una_celda_en(PosicionX,PosicionY);
 end;
 
+procedure Reglas;
+var
+ x,y:integer;
+begin
+  For x := 1 to X_Filas do
+     for y := 1 to Y_Columnas do
+         if ((CaldoDeCultivo[x,y]=1) and (CelulasVecinas[x,y]=2)) then
+            write(){ la celula sobrevive}
+         else // caldo x,y= 0 o no hay 2 vecinas
+             if CelulasVecinas[x,y]=3 then
+                CaldoDeCultivo[x,y]:=1  { nace una celula}
+             else {no sobrevive ni nace, es decir, muere o permanece en 0 }
+                CaldoDecultivo[x,y]:=0;
+end;
+
+Procedure Transicion_En_generacion(nAux:integer;imprimir:boolean);
+var
+   numero:integer;
+Begin
+ for Numero:=1 to nAux do
+     begin
+          Llenar_Celdas_de(CelulasVecinas);
+          Reglas;
+          if imprimir then
+             begin
+             Writeln('');
+             Writeln(' Generacion',Numero);
+             Imprimir_Matriz('Caldo de cultivo: ',CaldoDeCultivo,true,x_filas,y_columnas);
+             end;
+     end;
+end;
+
+  ////////////////////////////////////////////////////
+ // 3. Procedimientos de ajustes y modificaciones  //
+////////////////////////////////////////////////////
 Procedure Cambiar_En_posicion_XY(Celula:integer;estado,Proceso:string);
 var
  x,y:integer;
@@ -320,16 +351,16 @@ begin
                                begin
                                     writeln(' Avanza e imprime hasta N');
                                     validar(N,true,True,' N',500,1);
-                                     for nAux:=1 to N do
-                                         begin
-                                              Writeln(' Generacion',nAux);
-                                         end;
+                                    Transicion_En_generacion(N,true);
                                     readln();
                                end;
                              2:
                                begin
                                     writeln(' Se Imprime la generacion avanzada en N ');
                                     validar(N,true,True,' N',500,1);
+                                    Transicion_En_generacion(N,false);
+                                    Write('Caldo de cultivo en Generacion',N);
+                                    imprimir_Matriz(': ',CaldoDeCultivo,true,x_filas,y_columnas);
                                     readln();
                                end;
                              3:
