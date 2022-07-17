@@ -16,6 +16,8 @@ var
    ruta,NombreDelArchivo:string;
    //Contadores
    Generacion,Poblacion,N:integer;
+   //auxiliares
+   nAux:integer;
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -282,6 +284,10 @@ begin
                                begin
                                     writeln(' Avanza e imprime hasta N');
                                     validar(N,true,True,' N',500,1);
+                                     for nAux:=1 to N do
+                                         begin
+                                              Writeln(' Generacion',nAux);
+                                         end;
                                     readln();
                                end;
                              2:
