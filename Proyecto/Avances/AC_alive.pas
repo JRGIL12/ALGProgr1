@@ -131,11 +131,11 @@ begin
                 Write('Ingrese ',name,' ( max ',LimSup,' - min ',LimInf,' ) ');
             if leer then
                 readln(Dato);
-            if  Dato>LimSup then
+            if  Dato>=LimSup then
                 Writeln(name,'supera el limite ',LimSup);
-            if  Dato<LimInF+1 then
+            if  Dato<=LimInF then
                 Writeln(name,'es inferior a el limite ',LimInf);
-            valido:=( (Dato<LimSup+1)and(Dato>LimInf) );
+            valido:=( (Dato<=LimSup)and(Dato>=LimInf) );
             Writeln('');
      until valido;
 end;
@@ -171,6 +171,7 @@ Procedure Cambiar_En_posicion_XY(Celula:integer;estado,Proceso:string);
 var
  x,y:integer;
 Begin
+     writeln(proceso,' Celula en la posicion');
      validar(x,true,true,'fila ',X_filas,1);
      validar(y,true,true,'Columna',Y_columnas,1);
      if CaldoDeCultivo[x,y]= celula then
@@ -180,6 +181,7 @@ Begin
               Writeln(' En la posicion (',x,',',y,') no existe una celula',estado,' se procede a ',Proceso);
               CaldoDeCultivo[x,y]:=celula;
          end;
+     readln();
 end;
 
 procedure imprimir_Matriz(NombreDeLaMatriz:string;MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
@@ -298,18 +300,9 @@ begin
                             validar(opISM1,true,false,' el dato',3,0);barra;
                             Case opISM1 of
                              1:
-                               begin
-                                    writeln('Eliminar Celula en la posicion');
-                                    Cambiar_En_Posicion_XY(1,'muerta','Eliminar');
-                                    readln();
-                               end;
+                                Cambiar_En_Posicion_XY(0,'muerta','Eliminar');
                              2:
-                               begin
-                                    writeln('Agregar Celula en la posicion');
-                                    validar(x,true,true,'fila ',X_filas,1);
-                                    validar(y,true,true,'Columna',Y_columnas,1);
-                                    readln();
-                               end;
+                                Cambiar_En_Posicion_XY(1,'Viva','Agregar');
                              3:
                                 saliendo(' de Modificar Caldo',500);
                              end;
