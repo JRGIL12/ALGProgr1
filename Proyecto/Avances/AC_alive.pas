@@ -9,7 +9,7 @@ var
    //Variables de comprobacion:
    Archivos:boolean;
    // variables principales
-   CeldasVecinas,CaldoDeCultivo:matriz;
+   CelulasVecinas,CaldoDeCultivo:matriz;
    Entrada,Salida:text;
    //Variables secundarias
    x_Filas,y_columnas:integer;
@@ -122,7 +122,12 @@ end;
   ///////////////////////////////////////////////////////////////
  // 2. procedimientos de inicalzacion, validacion y impresion //
 ///////////////////////////////////////////////////////////////
-Procedure validar(var Dato:integer;leer,escribir:boolean;name:string;LimSup,Liminf:integer);
+function Esvalido(Valor,sup,inf:integer):boolean;
+begin
+ Esvalido:= ( (Valor<=Sup) and (valor>=Inf) );
+end;
+
+procedure validar(var Dato:integer;leer,escribir:boolean;name:string;LimSup,Liminf:integer);
 (* 2.1 Procedimiento para validar dato *)
 var
  valido:boolean;
@@ -133,11 +138,11 @@ begin
                 Write('Ingrese ',name,' ( max ',LimSup,' - min ',LimInf,' ) ');
             if leer then
                 readln(Dato);
-            if  Dato>=LimSup then
+            if  (Dato>=LimSup) then
                 Writeln(name,'supera el limite ',LimSup);
-            if  Dato<=LimInF then
+            if  (Dato<=LimInF) then
                 Writeln(name,'es inferior a el limite ',LimInf);
-            valido:=( (Dato<=LimSup)and(Dato>=LimInf) );
+            valido:=EsValido(Dato,LimSup,liminf);
             Writeln('');
      until valido;
 end;
@@ -159,7 +164,7 @@ Procedure inicializarDatosDeFormaPredeterminada;
 //Nota: como solo se inicializan los datos, estos se pueden llamar de forma global sin pasarlos como parametros
 begin
   Llenar_Matriz(CaldoDeCultivo,0,false);
-  Llenar_Matriz(CeldasVecinas,0,false);
+  Llenar_Matriz(CelulasVecinas,0,false);
   Archivos:=false;
   x_filas:= 10 + random(41) ;
   y_Columnas:= 10 + random(41);  (* Se recomienda meter un dato menor a 40*)
@@ -167,23 +172,6 @@ begin
   Generacion:=0;
   NombreDelArchivo:='entrada';
   Ruta:='C:\Datos\'+NombreDelArchivo+'.txt';
-end;
-
-Procedure Cambiar_En_posicion_XY(Celula:integer;estado,Proceso:string);
-var
- x,y:integer;
-Begin
-     writeln(proceso,' Celula en la posicion');
-     validar(x,true,true,'fila ',X_filas,1);
-     validar(y,true,true,'Columna',Y_columnas,1);
-     if CaldoDeCultivo[x,y]= celula then
-        Writeln(' En la posicion (',x,',',y,') ya existe una celula',estado)
-     else
-         begin
-              Writeln(' En la posicion (',x,',',y,') no existe una celula',estado,' se procede a ',Proceso);
-              CaldoDeCultivo[x,y]:=celula;
-         end;
-     readln();
 end;
 
 procedure imprimir_Matriz(NombreDeLaMatriz:string;MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
@@ -236,6 +224,53 @@ begin
    end;
  close(A);
 end;
+  ////////////////////////////////////////////////
+ // 2. procedimientos Modificacion e inspecion //
+////////////////////////////////////////////////
+
+function Vecinas_de_una_celda_en(Px,Py:integer):integer;
+ var
+  AuxX,AuxY,Temp:integer;
+  Rango:boolean;
+ begin
+  temp:=0;
+  for AuxX:=-1 to 1 do
+      for AuxY:=-1 to 1 do
+          if ( (AuxX<>0) or (AuxY<>0) ) then
+             begin
+                  Rango:= Esvalido(Px+AuxX,X_Filas,1);
+                  Rango:= Esvalido(PY+AuxY,Y_columnas,1);
+                  If  Rango then
+                     Temp:=temp+CaldoDeCultivo[Px+AuxX,Py+AuxY];
+             end;
+  Vecinas_de_una_celda_en:=temp;
+ end;
+
+procedure Llenar_Celdas_de( var Numero_de_Vecinas:matriz);
+var
+ PosicionX,PosicionY:integer;
+Begin
+   For PosicionX := 1 to x_Filas do
+     for PosicionY := 1 to y_Columnas do
+     Numero_de_Vecinas[PosicionX,PosicionY]:=Vecinas_de_una_celda_en(PosicionX,PosicionY);
+end;
+
+Procedure Cambiar_En_posicion_XY(Celula:integer;estado,Proceso:string);
+var
+ x,y:integer;
+Begin
+     writeln(proceso,' Celula en la posicion');
+     validar(x,true,true,'fila ',X_filas,1);
+     validar(y,true,true,'Columna',Y_columnas,1);
+     if CaldoDeCultivo[x,y]= celula then
+        Writeln(' En la posicion (',x,',',y,') ya existe una celula',estado)
+     else
+         begin
+              Writeln(' En la posicion (',x,',',y,') no existe una celula',estado,' se procede a ',Proceso);
+              CaldoDeCultivo[x,y]:=celula;
+         end;
+     readln();
+end;
 
   ///////////////////////////
  // 0. Programa Principal //
@@ -255,6 +290,7 @@ begin
                  validar(OpSM,true,false,' el dato',3,0);barra;
                  if archivos then
                     assign(Entrada,ruta);
+                 Llenar_Celdas_de(CelulasVecinas);
                  case OpSM of
                  1:
                   begin
@@ -266,7 +302,7 @@ begin
                     EspacioX(5);Writeln('Poblacion: ',Poblacion);
                     EspacioX(5);Writeln('Generacion: ',Generacion);
                     imprimir_Matriz('Caldo de cultivo: ',CaldoDeCultivo,true,x_filas,y_columnas);
-                    imprimir_Matriz('Celulas vecinas de cada celda: ',CeldasVecinas,false,x_filas,y_columnas);
+                    imprimir_Matriz('Celulas vecinas de cada celda: ',CelulasVecinas,false,x_filas,y_columnas);
                     EspacioX(4);EntradaDeDatos;readln();
                   end;
                  2:
