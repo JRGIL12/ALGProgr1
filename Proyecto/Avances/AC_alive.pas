@@ -15,7 +15,7 @@ var
    x_Filas,y_columnas:integer;
    ruta,Carpeta,NombreDelArchivo:string;
    //Contadores
-   Generacion,Poblacion,N:integer;
+   Generacion,Poblacion,MinPoblacion,N:integer;
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -165,6 +165,7 @@ begin
   Local:= not (archivos);
   Personalizacion:=false;
   x_filas:= 10 + random(41) ;
+  Minpoblacion:=X_Filas;
   y_Columnas:= 10 + random(41);  (* Se recomienda meter un dato menor a 40*)
   poblacion:=0;
   Generacion:=0;
