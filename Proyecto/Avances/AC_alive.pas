@@ -4,13 +4,18 @@ uses
 type
    Matriz= array [1..50,1..50] of integer;
 var
-   OpM{ opciones del Menu},OpSM{ opciones del SubMenu},OpISM{Opciones Internas del sub menu},opISM1{Opciones Internas del sub menu 1}: integer;
+   //Variables para el menu y opciones graficas  (op?opciones) (M?Menu) (SM?SubMenu )
+   OpM,OpSM,OpISM,OpISM1{Opciones Internas del SubMenu 1}: integer;
+   //Variables de comprobacion:
+   Archivos:boolean;
+   // variables principales
+   celdasVecinas,CaldoDeCultivo:matriz;
 
-
-///////////////////////////
-//Procedimientos graficos//
-///////////////////////////
+  ///////////////////////////////
+ // 1.Procedimientos graficos //
+///////////////////////////////
 Procedure EspacioX(N:integer);
+(* 1.1 Procedimiento para crear espacios en blanco *)
 var i:integer;
 begin
   for i := 1 to N do  
@@ -18,21 +23,25 @@ begin
 end;
 
 procedure Centrar (objeto:string;Centrado:integer);
+(* 1.2 Procedimiento para centrar un objeto *)
 begin
   EspacioX(Centrado);write(objeto);espacioX(Centrado);writeln();
 end;
 
 procedure barra;
+(* 1.3 Procedimiento para crear una barra de color *)
 begin
   textcolor(cyan);Writeln('////////////////////////////////////////////////////////////////////////////////');NormVideo;
 end;
 
 procedure entrada;
+(* 1.4 Procedimiento para crear espacios en blanco *)
 begin
   textcolor(cyan);write(Chr(175));NormVideo;
 end;
 
 Procedure Presentacion;
+(* 1.5 Procedimiento para La presentacion *)
 Begin
  //Linea 0
  writeln('');
@@ -75,6 +84,7 @@ Begin
 End;
 
 Procedure Menu(NtabT,NTabOp:integer;subtitulo,op1,op2,op3:string;Ct,COp1,COp2,COp3:integer);
+(* 1.6 Procedimiento para el menu reutilzable *)
 Begin
  clrscr;writeln();writeln();writeln();writeln();writeln();{5 saltos de linea para intentar centrarlo }
  EspacioX(25);
@@ -92,7 +102,19 @@ Begin
  writeln();EspacioX(30);entrada;
 End;
 
+procedure Saliendo(name:string;tiempo:integer);
+(* 1.7 Procedimiento para indicar la salida *)
+begin
+     textcolor(red);
+     writeln(' Esta saliendo ',name);
+     delay(tiempo);NormVideo;
+end;
+
+  ///////////////////////////////////////////////////////////////
+ // 2. procedimientos de inicalzacion, validacion y impresion //
+///////////////////////////////////////////////////////////////
 Procedure validar(var Dato:integer;leer,escribir:boolean;name:string;LimSup,Liminf:integer);
+(* 2.1 Procedimiento para validar dato *)
 var
  valido:boolean;
 begin
@@ -109,15 +131,25 @@ begin
      until valido;
 end;
 
-procedure Saliendo(name:string;tiempo:integer);
+procedure Llenar_Matriz(MatrizALlenar:matriz;Dato:integer;Aleatorio:boolean);
+var i,j:integer;
 begin
-     textcolor(red);
-     writeln(' Esta saliendo ',name);
-     delay(tiempo);NormVideo;
+  randomize;
+  For i:=1 to 50 do
+    for j := 1 to 50 do
+      begin
+        if Aleatorio then
+           dato := Random(2);
+        CaldoDeCultivo[i,j] := dato;
+      end;
 end;
-//////////////////////////////////////
-//fin de los procedimientos graficos//
-//////////////////////////////////////
+
+
+Procedure inicializarDatosDeFormaPredeterminada;
+//Nota: como solo se inicializan los datos, estos se pueden llamar de forma global sin pasarlos como parametros
+begin
+  //Llenar_Matriz(MatrizALlenar:matriz;Dato:integer;Aleatorio:boolean);
+end;
 
 procedure imprimir_Matriz(MatrizAimprimir:matriz;ImprimirCaldo:boolean;filas,columnas:integer);
 var
@@ -141,8 +173,12 @@ begin
     end;
 end;
 
-begin //programa principal
+  ///////////////////////////
+ // 0. Programa Principal //
+///////////////////////////
+begin
  presentacion;
+ InicializarDatosDeFormaPredeterminada;
  repeat
     menu(1,-1,'MENU','Play','Sentings','Exit',1,3,1,3);
     validar(OpM,true,false,' el dato',3,0);barra;
