@@ -7,7 +7,7 @@ var
    //Variables para el menu y opciones graficas  (op?opciones) (M?Menu) (SM?SubMenu )
    OpM,OpSM,OpISM,OpISM1{Opciones Internas del SubMenu 1}: integer;
    //Variables de comprobacion:
-   Archivos,RutaModificada:boolean;
+   Archivos,Local,RutaModificada,Personalizacion:boolean;
    // variables principales
    CelulasVecinas,CaldoDeCultivo:matriz;
    Entrada,Salida:text;
@@ -162,6 +162,8 @@ begin
   Llenar_Matriz(CaldoDeCultivo,0,false);
   Llenar_Matriz(CelulasVecinas,0,false);
   Archivos:=false;
+  Local:= not (archivos);
+  Personalizacion:=false;
   x_filas:= 10 + random(41) ;
   y_Columnas:= 10 + random(41);  (* Se recomienda meter un dato menor a 40*)
   poblacion:=0;
@@ -404,10 +406,14 @@ begin
                    Begin
                         writeln('  La configuracion actual es:');
                         Writeln('');
-                        Write(' Archivos: ');writeln(Archivos);
-                        Write(' Nombre del archivo: ');writeln(NombreDelArchivo);
-                        Write(' Carpeta: ');Writeln(Carpeta);
-                        Write(' Ruta: ');writeln(Ruta);
+                        Write(' *Archivos: ');writeln(Archivos);
+                        Write(' -Nombre del archivo: ');writeln(NombreDelArchivo);
+                        Write(' -Carpeta: ');Writeln(Carpeta);
+                        Write(' -Ruta: ');writeln(Ruta);
+                        Writeln('');
+                        Write(' *Local: ');writeln(Local);
+                        Writeln('');
+                        Write(' *Personalizacion: ');writeln(Personalizacion);
                         readln();
                    end;
                  2:
