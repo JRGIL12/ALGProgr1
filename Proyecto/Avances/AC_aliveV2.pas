@@ -374,12 +374,12 @@ Begin
              begin
              Writeln('');
              Writeln(' Generacion',Numero);
+             Imprimir_Matriz('Caldo de cultivo: ',CaldoDeCultivo,true,x_filas,y_columnas);
              if Personalizacion then
                 begin 
                     Delay(1500-n);
                      clrscr;
                  end;
-             Imprimir_Matriz('Caldo de cultivo: ',CaldoDeCultivo,true,x_filas,y_columnas);
              end;
      end;
 end;
