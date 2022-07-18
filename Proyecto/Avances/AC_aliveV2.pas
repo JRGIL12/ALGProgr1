@@ -251,9 +251,14 @@ begin
   valor := 0;
   val(texto, valor, codigoDeError);
   if  ( (valor<min) or (valor>Max) ) then
-     writeln(' El Parametro esta fuera del rango permitido por favor verifiquelo');
+    Begin
+     textcolor(Red);   
+     writeln(' El Parametro:', valor,', esta fuera del rango ');
+     normvideo;
+     ContadorDePoblacion:=ContadorDePoblacion-1;
+    end;
   if codigoDeError <> 0 then
-     writeln('hubo un error en la conversion de este parametro, por favor revise que sea un digito');
+     writeln('hubo un error en la conversion de el parametro:', valor,', por favor revise que sea un digito');
   ValorEntero := valor;
 end;
 
