@@ -20,7 +20,7 @@ var
    //Enumerados
    ajustes:
     (xArchivo,Devolver,NombreDeEntrada,nombreDeSalida,RutaC,RutaEntrada,RutaSalida,
-      Xlocal,xcreacion,xpoblacion,colores,bordes);
+      Xlocal,xcreacion,xpoblacion,Personalizado,colores,bordes);
 
   ///////////////////////////////
  // 1.Procedimientos graficos //
@@ -480,6 +480,11 @@ begin
                                begin
                                     writeln(' Avanza e imprime hasta N');
                                     validar(N,true,True,' N',500,1);
+                                    if Personalizacion then
+                                        begin 
+                                            Delay(500-n);
+                                            clrscr;
+                                        end;
                                     Transicion_En_generacion(N,true);
                                     readln();
                                end;
@@ -634,6 +639,14 @@ begin
                                 Begin
                                      PorPoblacion:=not PorPoblacion;
                                      writeln(' Por poblacion: ',PorPoblacion);
+                                end;
+                              end;
+                             Personalizado:
+                              begin
+                                if CambiarAjuste(' Personalizado')then
+                                Begin
+                                     Personalizacion:=not Personalizacion;
+                                     writeln(' Personalizado: ',Personalizacion);
                                 end;
                               end;
                              colores:
