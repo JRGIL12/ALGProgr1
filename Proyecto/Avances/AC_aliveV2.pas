@@ -222,7 +222,8 @@ begin
     EspacioX(40-columnas);
       for y := 1 to columnas do
         begin
-          write('|');
+          if not ModificacionDeBordes then
+            write('|');
           if ImprimirCaldo then
              begin
                   textbackground(MatrizAimprimir[x,y]);
@@ -231,7 +232,8 @@ begin
           else
               write(MatrizAimprimir[x,y]);
         end;
-      writeln('|');
+      if not ModificacionDeBordes then
+        writeln('|');
     end;
 end;
 
@@ -640,7 +642,7 @@ begin
                                 if CambiarAjuste(' bordes')then
                                 Begin
                                      ModificacionDeBordes:=not ModificacionDeBordes;
-                                     writeln(' Colores: ',ModificacionDeBordes);
+                                     writeln(' Bordes: ',ModificacionDeBordes);
                                 end;
                               end;
                             else 
