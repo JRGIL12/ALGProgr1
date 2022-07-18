@@ -374,6 +374,11 @@ Begin
              begin
              Writeln('');
              Writeln(' Generacion',Numero);
+             if Personalizacion then
+                begin 
+                    Delay(1500-n);
+                     clrscr;
+                 end;
              Imprimir_Matriz('Caldo de cultivo: ',CaldoDeCultivo,true,x_filas,y_columnas);
              end;
      end;
@@ -480,11 +485,6 @@ begin
                                begin
                                     writeln(' Avanza e imprime hasta N');
                                     validar(N,true,True,' N',500,1);
-                                    if Personalizacion then
-                                        begin 
-                                            Delay(500-n);
-                                            clrscr;
-                                        end;
                                     Transicion_En_generacion(N,true);
                                     readln();
                                end;
