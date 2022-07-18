@@ -189,7 +189,7 @@ begin
   PorPoblacion:=false;
   Personalizacion:=false;
   ModificacionDeColores:=false;
-  ModificacionDeBordes:=false;
+  ModificacionDeBordes:=true;
   x_filas:= 10 + random(41) ;
   Minpoblacion:=X_Filas;
   y_Columnas:= 10 + random(41);  (* Se recomienda meter un dato menor a 40*)
@@ -222,7 +222,7 @@ begin
     EspacioX(40-columnas);
       for y := 1 to columnas do
         begin
-          if not ModificacionDeBordes then
+          if  ModificacionDeBordes then
             write('|');
           if ImprimirCaldo then
              begin
@@ -232,7 +232,7 @@ begin
           else
               write(MatrizAimprimir[x,y]);
         end;
-      if not ModificacionDeBordes then
+      if  ModificacionDeBordes then
         writeln('|');
     end;
 end;
