@@ -233,7 +233,9 @@ begin
               write(MatrizAimprimir[x,y]);
         end;
       if  ModificacionDeBordes then
-        writeln('|');
+        writeln('|')
+      else
+        writeln();
     end;
 end;
 
