@@ -391,9 +391,23 @@ Begin
              end;
      end;
 end;
+Procedure LLenarPorPoblacion(Npoblacion:integer);
+var
+     z:integer;
+begin
+ while z<> Npoblacion do
+		Begin
+			x:=1+random(10);
+			y:=1+random(10);
+			If Caldo[x,y]<>1 then
+				begin
+					Caldo[x,y]:=1;
+					z:=z+1;
+				end;
+		End;
+end;
 
 procedure Retornar(var Archivo:text);
-
 var
   n,m:integer;
 begin
@@ -457,6 +471,7 @@ begin
                     begin
                          Writeln('La ruta no es valida, por favor cambiela');
                          Archivos:=false;
+                 local:=not Archivos;
                     end;
                  if archivos then
                     begin
@@ -480,6 +495,19 @@ begin
                   end;
                  2:
                    Begin
+                    if Local then 
+                        if Creacion then
+                            if CambiarAjuste(' Filas y columnas?') then
+                                begin
+                                    validar(X_Filas,true,True,' Filas',50,10);
+                                    validar(Y_Columnas,true,True,' Columnas',50,10);
+                                end;
+                        if poblacion then
+                            if CambiarAjuste(' Poblacion') then
+                                begin
+                                    validar(Poblacion,true,True,'la  Poblacion',X_Filas*Y_columnas,X_Filas);barra;
+                                    LLenarPorPoblacion(Npoblacion:integer);
+                                end;
                     repeat  
                         menu(4,3,'Editar Caldo','Avanzar Generacion',' Modificar Caldo',' Salir',1,1,2,7);
                         validar(OpISM,true,false,' el dato',3,0);barra;
