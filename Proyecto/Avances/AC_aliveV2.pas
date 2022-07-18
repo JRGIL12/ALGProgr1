@@ -101,20 +101,21 @@ var
  Colour:integer;
 Begin
  clrscr;writeln();writeln();writeln();writeln();writeln();{5 saltos de linea para intentar centrarlo }
+ Colour:=3;
  if ModificacionDeColores then
     Colour:=1+random(7);
  EspacioX(25);
- Textbackground(7);textcolor(3+blink);Writeln(' Automata Celular Alive ');normvideo;
+ Textbackground(7);textcolor(Colour+blink);Writeln(' Automata Celular Alive ');normvideo;
  EspacioX(25);
  EspacioX(10-NtabT);Textbackground(7);textcolor(0);centrar(subtitulo,Ct);normvideo;
  Writeln();
  Writeln();
  EspacioX(30-NtabOp);write(1);
- Textbackground(7);textcolor(3);Centrar(op1,COp1);normvideo;Writeln();
+ Textbackground(7);textcolor(Colour);Centrar(op1,COp1);normvideo;Writeln();
  EspacioX(30-NtabOp);write(2);
- Textbackground(7);textcolor(3);Centrar(op2,COp2);normvideo;Writeln();
- EspacioX(30-NtabOp);write(3);
- Textbackground(7);textcolor(3);Centrar(op3,COp3);normvideo;Writeln();
+ Textbackground(7);textcolor(Colour);Centrar(op2,COp2);normvideo;Writeln();
+ EspacioX(30-NtabOp);write(Colour);
+ Textbackground(7);textcolor(Colour);Centrar(op3,COp3);normvideo;Writeln();
  writeln();EspacioX(30);EntradaDeDatos;
 End;
 
