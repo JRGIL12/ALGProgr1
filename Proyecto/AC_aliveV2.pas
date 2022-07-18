@@ -232,7 +232,7 @@ begin
           if ImprimirCaldo then
              begin
                   textbackground(MatrizAimprimir[x,y]);
-                  write(' ');
+                  write(' ');normvideo;
              end
           else
               write(MatrizAimprimir[x,y]);
