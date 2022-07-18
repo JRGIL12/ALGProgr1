@@ -97,8 +97,12 @@ End;
 
 Procedure Menu(NtabT,NTabOp:integer;subtitulo,op1,op2,op3:string;Ct,COp1,COp2,COp3:integer);
 (* 1.6 Procedimiento para el menu reutilzable *)
+var
+ Colour:integer;
 Begin
  clrscr;writeln();writeln();writeln();writeln();writeln();{5 saltos de linea para intentar centrarlo }
+ if ModificacionDeColores then
+    Colour:=1+random(7);
  EspacioX(25);
  Textbackground(7);textcolor(3+blink);Writeln(' Automata Celular Alive ');normvideo;
  EspacioX(25);
