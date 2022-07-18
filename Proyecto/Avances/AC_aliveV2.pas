@@ -16,7 +16,7 @@ var
    x_Filas,y_columnas:integer;
    SiNo,Rutae,RutaS,Carpeta,NombreDelArchivoE,NombreDelArchivoS:string;
    //Contadores
-   Generacion,Poblacion,MinPoblacion,N:integer;
+   Generacion,Poblacion,Minpoblacion,N:integer;
    //Enumerados
    ajustes:
     (xArchivo,Devolver,NombreDeEntrada,nombreDeSalida,RutaC,RutaEntrada,RutaSalida,
@@ -153,7 +153,7 @@ begin
      until valido;
 end;
 
-procedure Llenar_Matriz(MatrizALlenar:matriz;Dato:integer;Aleatorio:boolean);
+procedure Llenar_Matriz(var MatrizALlenar:matriz;Dato:integer;Aleatorio:boolean);
 (* 2.1 Procedimiento para llenar una matriz *)
 var i,j:integer;
 begin
@@ -498,15 +498,19 @@ begin
                    Begin
                     if Local then 
                         if PorCreacion then
-                            if CambiarAjuste(' Filas y columnas?') then
-                                begin
-                                    validar(X_Filas,true,True,' Filas',50,10);
-                                    validar(Y_Columnas,true,True,' Columnas',50,10);
-                                end;
+                            begin
+                                if CambiarAjuste(' Filas y columnas?') then
+                                    begin
+                                        validar(X_Filas,true,True,' Filas',50,10);
+                                        validar(Y_Columnas,true,True,' Columnas',50,10);
+                                    end;
+                                if CambiarAjuste(' Llenado?') then
+                                Llenar_Matriz(CaldoDeCultivo,0,true);
+                            end;
                         if Porpoblacion then
                             if CambiarAjuste(' Poblacion') then
                                 begin
-                                    validar(Poblacion,true,True,'la  Poblacion',X_Filas*Y_columnas,X_Filas);barra;
+                                    validar(Poblacion,true,True,'la  Poblacion',X_Filas*Y_columnas,Minpoblacion);barra;
                                     LLenarPorPoblacion(poblacion);
                                 end;
                     repeat  
