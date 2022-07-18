@@ -255,10 +255,13 @@ begin
      textcolor(Red);   
      writeln(' El Parametro:', valor,', esta fuera del rango ');
      normvideo;
-     ContadorDePoblacion:=ContadorDePoblacion-1;
+     Writeln('  Se evitara esta linea para salvar las demas');
     end;
   if codigoDeError <> 0 then
-     writeln('hubo un error en la conversion de el parametro:', valor,', por favor revise que sea un digito');
+    begin
+     writeln('hubo un error en la conversion de el parametro:', texto);
+     Writeln(' por favor revise que sea un digito');
+    end;
   ValorEntero := valor;
 end;
 
